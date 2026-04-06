@@ -17,6 +17,7 @@ Goal: match or mismatch (1 or 0)
 
 '''
 
+# RUN ONCE
 
 
 def convert_arff_to_csv(input_path: str | Path, output_path: str | Path) -> None:
@@ -86,8 +87,8 @@ def convert_arff_to_csv(input_path: str | Path, output_path: str | Path) -> None
 
 
 if __name__ == "__main__":
-    INPUT_FILE = Path("data") / "speed_dating" / "speed_dating.arff"
-    OUTPUT_FILE = Path("data") / "speed_dating" / "speed_dating.csv"
+    INPUT_FILE = Path("data") / "speed_dating" / "speed_dating_raw.arff"
+    OUTPUT_FILE = Path("data") / "speed_dating" / "speed_dating_processed.csv"
 
     convert_arff_to_csv(INPUT_FILE, OUTPUT_FILE)
     print(f"Saved CSV to: {OUTPUT_FILE.resolve()}")

@@ -80,7 +80,7 @@ def preprocess_students_data(input_path: str | Path, output_path: str | Path) ->
 
 
 if __name__ == "__main__":
-    input_file = Path("data") / "stud_perf" / "students.csv"
-    output_file = Path("data") / "stud_perf" / "students.csv"
+    INPUT_FILE = Path("data") / "stud_perf" / "students_raw.csv"
+    OUTPUT_FILE = Path("data") / "stud_perf" / "students_processed.csv"
 
-    preprocess_students_data(input_file, output_file)
+    preprocess_students_data(INPUT_FILE, OUTPUT_FILE)

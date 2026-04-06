@@ -53,8 +53,8 @@ def convert_arff_to_csv(input_path: str | Path, output_path: str | Path) -> None
 
 
 if __name__ == "__main__":
-    INPUT_FILE = Path("data") / "madelon" / "madelon.arff"
-    OUTPUT_FILE = Path("data") / "madelon" / "madelon.csv"
+    INPUT_FILE = Path("data") / "madelon" / "madelon_raw.arff"
+    OUTPUT_FILE = Path("data") / "madelon" / "madelon_processed.csv"
 
     convert_arff_to_csv(INPUT_FILE, OUTPUT_FILE)
     print(f"Saved CSV to: {OUTPUT_FILE.resolve()}")
