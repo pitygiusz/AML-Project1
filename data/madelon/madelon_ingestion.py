@@ -18,6 +18,7 @@ It was added a number of distractor feature called 'probes' having no predictive
 There is no attribute information provided to avoid biasing the feature selection process.
 '''
 
+# RUN ONLY ONCE
 
 def convert_arff_to_csv(input_path: str | Path, output_path: str | Path) -> None:
     input_path = Path(input_path)
