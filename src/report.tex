@@ -120,7 +120,7 @@ The Fast Iterative Shrinkage-Thresholding Algorithm (FISTA) is a first-order opt
 $$
     \min_{\mathbf{w}, b} F(\mathbf{w}, b) = f(\mathbf{w}, b) + g(\mathbf{w})
 $$
-where $f(\mathbf{w}, b)$ represents the empirical logistic loss over $n$ samples, and $g(\mathbf{w})$ imposes the $\ell_1$ penalty. For binary classification with labels $y^{(i)} \in \{-1, 1\}$ and feature vectors $\mathbf{x}^{(i)}$, the terms are defined as:
+For standard binary classification, we assume the input labels are $y^{(i)} \in \{0, 1\}$. To formulate the logistic loss using margin-based notation, we map these to signed labels $\tilde{y}^{(i)} \in \{-1, 1\}$. Given feature vectors $\mathbf{x}^{(i)}$, the objective components are defined as:
 $$
     f(\mathbf{w}, b) = \frac{1}{n} \sum_{i=1}^n \log\left(1 + \exp\left(-y^{(i)}(\mathbf{w}^T \mathbf{x}^{(i)} + b)\right)\right), \quad \quad g(\mathbf{w}) = \lambda \|\mathbf{w}\|_1
 $$
