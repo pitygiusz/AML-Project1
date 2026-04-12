@@ -72,14 +72,14 @@ Warsaw University of Technology
 
 In this project, we investigate the performance of logistic regression in the presence of missing labels. We consider different missing data mechanisms (described in details in \textbf{Appendix A}) and analyze their impact on model training and prediction.
 
-To address this problem, we implement label-masking procedures, an optimization algorithm based on FISTA, and an extended logistic regression model capable of handling partially observed data. The proposed methods are evaluated on multiple datasets (described in details in Appendix B) with varying characteristics to assess their robustness and generalization ability.
+To address this problem, we implement label-masking procedures, an optimization algorithm based on FISTA, and an extended logistic regression model capable of handling partially observed data. The proposed methods are evaluated on multiple datasets (described in details in \textbf{Appendix B}) with varying characteristics to assess their robustness and generalization ability.
 
 
 \section{FISTA Algorithm}
 
 
 \subsection{Overview and Motivation}
-The Fast Iterative Shrinkage-Thresholding Algorithm (FISTA) is a first-order optimization method designed specifically for composite convex optimization problems. These problems typically involve minimizing an objective function that can be decomposed into two distinct components: a smooth, continuously differentiable loss function and a possibly non-smooth, convex penalty term:
+The \textbf{Fast Iterative Shrinkage-Thresholding Algorithm} (FISTA) is a first-order optimization method designed specifically for composite convex optimization problems. These problems typically involve minimizing an objective function that can be decomposed into two distinct components: a smooth, continuously differentiable loss function and a possibly non-smooth, convex penalty term:
 $$
     \min_{\mathbf{w}, b} F(\mathbf{w}, b) = f(\mathbf{w}, b) + g(\mathbf{w})
 $$
@@ -87,9 +87,9 @@ For standard binary classification, we assume the input labels are $y^{(i)} \in 
 $$
     f(\mathbf{w}, b) = \frac{1}{n} \sum_{i=1}^n \log\left(1 + \exp\left(-y^{(i)}(\mathbf{w}^T \mathbf{x}^{(i)} + b)\right)\right), \quad \quad g(\mathbf{w}) = \lambda \|\mathbf{w}\|_1
 $$
-where $\lambda > 0$ acts as the regularization hyperparameter. To iteratively minimize the objective function formulated above, we employ the standard FISTA procedure outlined in Algorithm~1.
+where $\lambda > 0$ acts as the regularization hyperparameter. To iteratively minimize the objective function formulated above, we employ the standard FISTA procedure outlined in Algorithm~1 [1].
 \begin{algorithm}[H]
-\caption{FISTA with constant stepsize (Beck \& Teboulle, 2009)}
+\caption{FISTA with constant stepsize}
 \begin{algorithmic}[1]
 \Require $L = L(f)$ \Comment{A Lipschitz constant of $\nabla f$}
 \Require $\mathbf{x}_0 \in \mathbb{R}^n$
@@ -186,9 +186,9 @@ Surprisingly, the Naive approach (listwise deletion) proved to be highly competi
 The most striking observation from the experimental results is the catastrophic failure of all non-Oracle models under the \textbf{MNAR (Missing Not At Random)} mechanism. This is vividly illustrated in the performance tables and visualizations for the Madelon and Speed Dating datasets. For these configurations, the F1-Score for Naive, Unlabeled (KNN), and Unlabeled (LogReg) plummeted to exactly \textbf{0.0000}.
 
 This behavior is a direct, mathematical consequence of the MNAR formulation used in the data generation process:
-\begin{equation}
+$$
 \text{combined\_scores} = \text{scores} + (y_{true} \times 2 - 1)
-\end{equation}
+$$
 Assuming binary labels $y \in \{0, 1\}$, this expression acts as a severe penalty. If the true class is $y=1$, the score increases, exponentially raising the probability of the label being dropped. Consequently, the observable training set becomes drastically stripped of positive examples. 
 
 When the Naive model trains on this skewed data, it learns a strong prior towards the majority class ($y=0$), pushing the intercept ($b$) to a large negative value. Similarly, the imputers in the Unlabeled methods are trained on a sea of zeros, causing them to predict $0$ for almost all missing labels. Ultimately, the final FISTA model collapses into predicting a single class (Class 0) for the entire test set. 
@@ -212,7 +212,7 @@ This model collapse is mathematically confirmed by observing the Balanced Accura
         \vspace{0.2cm}
         \small (b) Car Eval F1-Scores
     \end{minipage}
-    \caption{Numerical F1-Score heatmaps (Part 1). Mapping Method against Missing Mechanism.}
+    %\caption{Numerical F1-Score heatmaps (Part 1).}
     \label{fig:result_heatmaps_1}
 \end{figure}
 
@@ -233,7 +233,7 @@ This model collapse is mathematically confirmed by observing the Balanced Accura
         \vspace{0.2cm}
         \small (d) Student Performance F1-Scores
     \end{minipage}
-    \caption{Numerical F1-Score heatmaps (Part 2). Providing precise numerical references for the analysis in Sections 5.2 and 5.3, including the MNAR collapse.}
+    \caption{Numerical F1-Score heatmaps}
     \label{fig:result_heatmaps_2}
 \end{figure}
 
@@ -249,16 +249,28 @@ This model collapse is mathematically confirmed by observing the Balanced Accura
 To understand the limits of our approaches, we evaluated the models' F1-Scores across an increasing probability of missing labels ($c \in [0.01, 0.90]$) under the MCAR assumption, as visualized in Figure~\ref{fig:sensitivity_mcar}.
 
 \begin{itemize}
+
+    \item \textbf{Madelon:} The results become highly volatile. Madelon relies on complex, non-linear relationships without a single strong linear predictor. Removing labels drastically increases the variance of the FISTA gradients, leading to large oscillations in the F1-Score.
+    
     \item \textbf{Car Eval:} The models demonstrate extreme robustness. Performance remains virtually identical to the Oracle up to a missing rate of $c=0.60$. Beyond $c=0.60$, the Unlabeled (KNN) method degrades sharply, while the Naive method and LogReg imputation remain relatively stable even with 80\% of the labels missing.
     
     \item \textbf{Speed Dating:} We observe a steady, near-linear decline in the F1-Score as $c$ increases. Due to the initial high imbalance (only 16.5\% positive class), dropping data uniformly quickly removes the critical minority examples needed to establish a good decision boundary.
     
-    \item \textbf{Madelon:} The results become highly volatile. Madelon relies on complex, non-linear relationships without a single strong linear predictor. Removing labels drastically increases the variance of the FISTA gradients, leading to large oscillations in the F1-Score.
+
     
     \item \textbf{Student Performance:} Because the total dataset size is merely 395 samples (with only 237 in the training set), removing any data creates severe instability. The sensitivity plot exhibits massive variance, indicating that for very small datasets, the specific random seed (determining which exact rows are dropped) matters more than the imputation algorithm itself.
 \end{itemize}
 
 Overall, the sensitivity analysis proves that the Naive strategy is remarkably robust under MCAR conditions for sufficiently large and balanced datasets, whereas imputation methods (especially KNN) require careful tuning and sufficient data density to be effective.
+
+\section{Code Availability}
+The complete source code, including the implementation of the FISTA algorithm, UnlabeledLogReg class, and scripts used to generate the figures in this report, is available on GitHub at: \\
+\url{https://github.com/pitygiusz/AML-Project1}
+
+\section{References}
+[1] Beck, A., \& Teboulle, M. (2009). A fast iterative shrinkage-thresholding algorithm for linear inverse problems. SIAM journal on imaging sciences, 2(1), 183-202.
+
+
 
 \newpage
 \appendix
