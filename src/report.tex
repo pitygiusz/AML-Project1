@@ -1,31 +1,49 @@
-\documentclass[12pt]{article}
-
-% Layout
-\usepackage[margin=2.5cm]{geometry}
-\linespread{1.2}
-
-% Math
-\usepackage{amsmath}
-
-% Figures and tables
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{caption}
-\usepackage{booktabs}
+\documentclass[12pt,a4paper]{article}
+\usepackage{cite}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}   
+\usepackage{wrapfig}    
+\usepackage{color}  
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{subfig}
 \usepackage{subcaption}
-\usepackage{comment}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-% Better URL breaking
-\usepackage{xurl}
-
-% Bibliography
-\usepackage[backend=biber,style=numeric,backref=true]{biblatex}
-\addbibresource{references.bib}
-
-% Hyperlinks
-\usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=black]{hyperref}
+\usepackage{array}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage{pdflscape}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{colortbl}
+\usepackage[round]{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements
+\usepackage{amstext}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\usepackage{geometry}
+\usepackage{sectsty}
+\newgeometry{tmargin=2cm, bmargin=2cm, lmargin=1cm, rmargin=1cm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{gensymb}
+\sectionfont{\color{RoyalBlue}}
+\subsectionfont{\color{ForestGreen}} 
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.7}
+\usepackage{multirow}
+\usepackage{algorithm} 
+\usepackage{algpseudocode} 
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=blue]{hyperref} 
 
 \title{Advanced Machine Learning}
 \author{
@@ -41,11 +59,9 @@ Warsaw University of Technology
 
 
 \begin{abstract}
-\noindent The aim of the project is to analyze a logistic regression model in a situation where the training 
-dataset contains observations with missing labels.
+\noindent The aim of this project is to analyze the performance of a logistic regression model when trained on datasets with missing labels. We investigate how different missing data mechanisms (MCAR, MAR, MNAR) affect the learning process and evaluate simple imputation strategies to maintain the model's accuracy.
 \end{abstract}
 
-\newpage 
 
 {\footnotesize
 \tableofcontents
@@ -54,64 +70,11 @@ dataset contains observations with missing labels.
 
 \section{Introduction}
 
-In this project, we investigate the performance of logistic regression in the presence of missing labels. We consider different missing data mechanisms (MCAR, MAR, MNAR) and analyze their impact on model training and prediction.
+In this project, we investigate the performance of logistic regression in the presence of missing labels. We consider different missing data mechanisms (described in details in \textbf{Appendix A}) and analyze their impact on model training and prediction.
 
-To address this problem, we implement label-masking procedures, an optimization algorithm based on FISTA, and an extended logistic regression model capable of handling partially observed data. The proposed methods are evaluated on multiple datasets with varying characteristics to assess their robustness and generalization ability.
-
-\section{Preparing Datasets}
-
-We selected four datasets representing different classification problems to evaluate model robustness and generalization.
-
-\begin{enumerate}
-    \item \href{https://archive.ics.uci.edu/dataset/19/car+evaluation}{\textbf{Car Evaluation Dataset}} consists of 1728 instances described by 15 features. The task is to classify whether a car is acceptable or not based on attributes such as \textit{number of doors}, \textit{luggage boot size}, and \textit{safety level}.
-    
-    \item \href{https://www.openml.org/search?type=data&sort=runs&status=active&qualities.NumberOfClasses=%3D_2&qualities.NumberOfFeatures=between_100_1000&id=1485}{\textbf{Madelon Dataset}} is an artificial dataset created for the NIPS 2003 feature selection challenge. It is particularly challenging due to its highly multivariate and non-linear structure. The dataset comprises 2600 instances with 500 features, many of which are redundant or irrelevant.
-
-    \item \href{https://archive.ics.uci.edu/dataset/320/student+performance}{\textbf{Student Performance Dataset}} aims to predict whether a student passes a mathematics course. It includes academic results along with demographic, social, and school-related attributes. The dataset contains 395 instances described by 26 features.
-
-    \item \href{https://www.openml.org/search?type=data&sort=runs&status=active&qualities.NumberOfClasses=%3D_2&qualities.NumberOfFeatures=between_100_1000&id=40536}{\textbf{Speed Dating Dataset}} addresses a binary classification problem of predicting whether a match occurs between participants. The data was collected during experimental speed dating events and includes features describing participants’ preferences, attributes, and interactions. It consists of 8378 instances and 329 features.
-\end{enumerate}
+To address this problem, we implement label-masking procedures, an optimization algorithm based on FISTA, and an extended logistic regression model capable of handling partially observed data. The proposed methods are evaluated on multiple datasets (described in details in Appendix B) with varying characteristics to assess their robustness and generalization ability.
 
 
-\section{Implementing Missing Data Generators}
-
-We implemented four mechanisms for masking the target vector $Y$ within a \texttt{DataGenerator} class.
-
-\subsection{MCAR}
-
-In MCAR (Missing Completely At Random), missingness is independent of both $X$ and $Y$:
-\begin{align*}
-    P(S = 1 \mid X, Y) = c,
-\end{align*}
-where $c \in [0,1]$. Missing values are generated by sampling a binary indicator vector $S$ from a Bernoulli distribution with parameter $c$. The observed target $y_{\text{obs}}$ is obtained by replacing entries corresponding to $S=1$ with a placeholder value (e.g., $-1$).
-
-\subsection{MAR1}
-
-In MAR1 (Missing At Random), missingness depends on a single feature $X_j$, where $j \sim \mathcal{U}(0, p-1)$:
-\begin{align*}
-    P(S = 1 \mid X, Y) = P(S = 1 \mid X_j).
-\end{align*}
-A feature index is randomly selected, and its values are transformed using a logistic function to obtain masking probabilities. These probabilities are then used to sample the indicator vector $S$, which determines which labels are replaced by a placeholder.
-
-\subsection{MAR2}
-
-In MAR2, missingness depends on all features:
-\begin{align*}
-    P(S = 1 \mid X, Y) = P(S = 1 \mid X).
-\end{align*}
-A score is computed as a normalized sum of all feature values and transformed via a logistic function to obtain masking probabilities. The indicator vector $S$ is then sampled accordingly, and missing labels are introduced in the same way as before.
-
-\subsection{MNAR}
-
-In MNAR (Missing Not At Random), missingness depends on both $X$ and $Y$:
-\begin{align*}
-    P(S = 1 \mid X, Y).
-\end{align*}
-A combined score based on feature values and the target variable is computed and passed through a logistic function to obtain masking probabilities. The indicator vector $S$ is sampled from these probabilities, and labels corresponding to $S=1$ are replaced with a placeholder.
-
-
-
-\newpage
 \section{FISTA Algorithm}
 
 
@@ -145,7 +108,7 @@ In our programmatic implementation, the iterative optimization relies strictly o
         \mathbf{x}_k = p_L(\mathbf{y}_k)=\mathcal{T}_{\alpha \lambda}(\mathbf{x}_{\text{temp}})=\mathcal{T}_{\alpha \lambda}(\mathbf{x}_{\mathbf{y}_{k}} - \alpha \nabla_{\mathbf{y}_k} f))
     $$
     where the proximal operator is defined as:
-        $ \mathcal{T}_{\gamma}(z) = \text{sign}(z) \cdot \max(|z| - \gamma, 0)$,     
+        $ \mathcal{T}_{\gamma}(z) = \text{sign}(z) \cdot \max(|z| - \gamma, 0)$,      
     which leads to the element-wise update:
         $$ \mathbf{x}_k = \text{sign}(\mathbf{x}_{\text{temp}}) \odot \max(|\mathbf{x}_{\text{temp}}| - \alpha \lambda, 0)     $$
     Because the intercept $b$ remains unregularized, it is updated purely via the gradient step: $$b_k = y_{k,b} - \alpha \nabla_{y_{k,b}} f.$$
@@ -163,9 +126,22 @@ Using the chain rule, we obtain the gradient for a single observation as
         $ \frac{\partial f_i}{\partial \mathbf{y}_k} = \delta_i \cdot \mathbf{x}^{(i)}     $.
 To compute the total gradient across all $n$ observations, we average the individual gradients. The iterative process continues until a predefined convergence criterion is satisfied, specifically when the Euclidean norm of the parameter update, $\|\mathbf{x}_k - \mathbf{x}_{k-1}\|_2$, falls beneath a strict tolerance threshold.
 
+\section{UnlabeledLogReg Implementation}
 
-\subsection{Hyperparameter Tuning}
-To pick the best regularization coefficient $\lambda$, our implementation employs a grid search strategy combined with hold-out validation. The algorithm operates over a logarithmically spaced sequence of candidate values and computes the corresponding model weights. Then it is evaluated on a dedicated, hold-out validation set using a user-specified performance metric. The $\lambda$ that maximizes the validation score is selected as the optimal hyperparameter, and its associated coefficients are retained as the final model parameters.
+To address the challenge of missing labels in the training data, we implemented a custom wrapper class named \texttt{UnlabeledLogReg}. This approach falls under the umbrella of semi-supervised learning and single-imputation techniques. The core idea is to leverage the fully observed portion of the data to estimate the missing labels before training the final predictive FISTA model.
+
+The algorithm proceeds in the following steps:
+\begin{enumerate}
+    \item \textbf{Data Partitioning:} The input training set $(\mathbf{X}, y_{obs})$ is split into two disjoint subsets based on the label values: the labeled set where $y_{obs} \neq -1$, and the unlabeled (missing) set where $y_{obs} = -1$.
+    \item \textbf{Imputer Training:} An imputation model is trained exclusively on the labeled subset. We implemented two distinct imputation strategies:
+    \begin{itemize}
+        \item \textbf{k-Nearest Neighbors (k-NN):} Uses the 5 closest labeled samples in the feature space to vote on the missing label.
+        \item \textbf{Logistic Regression (Sklearn):} Fits a standard logistic regression model to the observed data to predict the missing labels.
+    \end{itemize}
+    \item \textbf{Label Imputation:} The trained imputer predicts the labels $\hat{y}$ for the unlabeled subset $\mathbf{X}_{unlabeled}$.
+    \item \textbf{Dataset Reconstruction:} A complete, pseudo-labeled target vector $y_{complete}$ is formed by concatenating the original $y_{obs}$ (for the labeled part) and the predicted $\hat{y}$ (for the missing part).
+    \item \textbf{Final Model Training:} The custom \texttt{FistaLogisticRegression} model is then trained on the fully reconstructed dataset $(\mathbf{X}, y_{complete})$.
+\end{enumerate}
 
 \subsection{Prediction, Classification and Model Evaluation}
 Following optimization, the framework provides standard inference and evaluation methods:
@@ -177,9 +153,194 @@ Following optimization, the framework provides standard inference and evaluation
 \end{itemize}
 
 
+\section{Experimental Results and Analysis}
+\textit{Note on reproducibility: The raw numerical data generated during all experiments, including comprehensive metrics for every dataset configuration and the full arrays from the sensitivity analysis, have been exported and are provided in the attached \texttt{results/} directory as \texttt{all\_experiment\_results.json} and \texttt{all\_sensitivity\_results.json}.}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{F1ScoreComparisonAcrossDatasetsAndMissingMechanisms.png}
+    \caption{Master comparison of F1-Scores on the test set. Each subplot visualizes performance across four models (Oracle, Naive, Unlabeled KNN, Unlabeled LogReg) and four missing data mechanisms (MCAR, MAR1, MAR2, MNAR) for a specific dataset.}
+    \label{fig:main_f1_comparison}
+\end{figure}
+
+\subsection{Scope of the Experiments}
+To thoroughly evaluate the robustness of our FISTA implementation and the \texttt{UnlabeledLogReg} imputation methods, we designed a comprehensive experimental setup.
+
+\subsubsection{Evaluated Models}
+For each dataset and each missing data mechanism (MCAR, MAR1, MAR2, MNAR), we evaluated four baselines:
+\begin{enumerate}
+    \item \textbf{Oracle:} Trained on the original, uncorrupted training dataset (serves as the theoretical upper bound).
+    \item \textbf{Naive:} Trained using listwise deletion (ignoring all rows where $y = -1$).
+    \item \textbf{Unlabeled (KNN):} Imputed using $k$-NN before FISTA training.
+    \item \textbf{Unlabeled (LogReg):} Imputed using Sklearn's Logistic Regression before FISTA training.
+\end{enumerate}
+
+\subsection{General Performance (MCAR, MAR1, MAR2)}
+
+Performance was primarily evaluated using the F1-Score to account for class imbalances. Across the completely random (MCAR) and conditionally random (MAR1, MAR2) mechanisms, the performance of the models remained relatively stable compared to the Oracle baseline. 
+
+Surprisingly, the Naive approach (listwise deletion) proved to be highly competitive. In datasets like Car Eval and Student Performance, the Naive model often matched or even outperformed the imputation methods (KNN and LogReg). This happens because imputation models are not perfect and often predict incorrect labels for the missing data, introducing "noise" into the training set. The results suggest that the FISTA algorithm trains better on a smaller, but 100\% ground-truth subset of data (Naive) rather than a larger dataset contaminated with incorrectly guessed pseudo-labels (Unlabeled methods), provided that the missing data is distributed randomly (MCAR/MAR).
+
+\subsection{The MNAR Anomaly: A Complete Model Collapse}
+
+The most striking observation from the experimental results is the catastrophic failure of all non-Oracle models under the \textbf{MNAR (Missing Not At Random)} mechanism. This is vividly illustrated in the performance tables and visualizations for the Madelon and Speed Dating datasets. For these configurations, the F1-Score for Naive, Unlabeled (KNN), and Unlabeled (LogReg) plummeted to exactly \textbf{0.0000}.
+
+This behavior is a direct, mathematical consequence of the MNAR formulation used in the data generation process:
+\begin{equation}
+\text{combined\_scores} = \text{scores} + (y_{true} \times 2 - 1)
+\end{equation}
+Assuming binary labels $y \in \{0, 1\}$, this expression acts as a severe penalty. If the true class is $y=1$, the score increases, exponentially raising the probability of the label being dropped. Consequently, the observable training set becomes drastically stripped of positive examples. 
+
+When the Naive model trains on this skewed data, it learns a strong prior towards the majority class ($y=0$), pushing the intercept ($b$) to a large negative value. Similarly, the imputers in the Unlabeled methods are trained on a sea of zeros, causing them to predict $0$ for almost all missing labels. Ultimately, the final FISTA model collapses into predicting a single class (Class 0) for the entire test set. 
+
+This model collapse is mathematically confirmed by observing the Balanced Accuracy metric for MNAR, which drops to exactly \textbf{0.5000}. In binary classification, a balanced accuracy of 0.5 perfectly indicates that the model has zero sensitivity (Recall = 0) and is predicting only one class. Because True Positives = 0, the F1-Score collapses to zero. Despite this, the ROC AUC often remains above 0.5 (e.g., ~0.54 for Madelon MNAR), indicating the model retains some ranking capability, but fails completely at the hard threshold of 0.5.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{MadelonHeatmap.png}
+        
+        \vspace{0.2cm}
+        \small (a) Madelon F1-Scores
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{CarEvalHeatmap.png}
+        
+        \vspace{0.2cm}
+        \small (b) Car Eval F1-Scores
+    \end{minipage}
+    \caption{Numerical F1-Score heatmaps (Part 1). Mapping Method against Missing Mechanism.}
+    \label{fig:result_heatmaps_1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SpeedDatingHeatmap.png}
+        
+        \vspace{0.2cm}
+        \small (c) Speed Dating F1-Scores
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{StudentPerformanceHeatmap.png}
+        
+        \vspace{0.2cm}
+        \small (d) Student Performance F1-Scores
+    \end{minipage}
+    \caption{Numerical F1-Score heatmaps (Part 2). Providing precise numerical references for the analysis in Sections 5.2 and 5.3, including the MNAR collapse.}
+    \label{fig:result_heatmaps_2}
+\end{figure}
+
+\subsection{Sensitivity Analysis: Impact of the Missing Rate (MCAR)}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{ImpactOfMissingDataAmount.png}
+    \caption{MCAR Sensitivity Dashboard. Plots illustrate the F1-Score on the test set as the probability of missing labels ($c$) increases from 0.01 to 0.90, comparing Naive, Unlabeled KNN, and Unlabeled LogReg methods against the green dashed Oracle baseline.}
+    \label{fig:sensitivity_mcar}
+\end{figure}
+
+To understand the limits of our approaches, we evaluated the models' F1-Scores across an increasing probability of missing labels ($c \in [0.01, 0.90]$) under the MCAR assumption, as visualized in Figure~\ref{fig:sensitivity_mcar}.
+
+\begin{itemize}
+    \item \textbf{Car Eval:} The models demonstrate extreme robustness. Performance remains virtually identical to the Oracle up to a missing rate of $c=0.60$. Beyond $c=0.60$, the Unlabeled (KNN) method degrades sharply, while the Naive method and LogReg imputation remain relatively stable even with 80\% of the labels missing.
+    
+    \item \textbf{Speed Dating:} We observe a steady, near-linear decline in the F1-Score as $c$ increases. Due to the initial high imbalance (only 16.5\% positive class), dropping data uniformly quickly removes the critical minority examples needed to establish a good decision boundary.
+    
+    \item \textbf{Madelon:} The results become highly volatile. Madelon relies on complex, non-linear relationships without a single strong linear predictor. Removing labels drastically increases the variance of the FISTA gradients, leading to large oscillations in the F1-Score.
+    
+    \item \textbf{Student Performance:} Because the total dataset size is merely 395 samples (with only 237 in the training set), removing any data creates severe instability. The sensitivity plot exhibits massive variance, indicating that for very small datasets, the specific random seed (determining which exact rows are dropped) matters more than the imputation algorithm itself.
+\end{itemize}
+
+Overall, the sensitivity analysis proves that the Naive strategy is remarkably robust under MCAR conditions for sufficiently large and balanced datasets, whereas imputation methods (especially KNN) require careful tuning and sufficient data density to be effective.
+
+\newpage
+\appendix
+
+\section{Handling Missing Data}
+
+To evaluate the robustness of our algorithms, we synthetically injected missing values (denoted as $y = -1$) \textbf{exclusively into the training sets}, evaluating the performance on uncorrupted validation and test sets. We implemented four distinct data-missing mechanisms:
+
+\subsection{MCAR}
+
+In MCAR (Missing Completely At Random), missingness is independent of both $X$ and $Y$:
+\begin{align*}
+    P(S = 1 \mid X, Y) = c,
+\end{align*}
+where $c \in [0,1]$. Missing values are generated by sampling a binary indicator vector $S$ from a Bernoulli distribution with parameter $c$. The observed target $y_{\text{obs}}$ is obtained by replacing entries corresponding to $S=1$ with a placeholder value (e.g., $-1$).
+
+\subsection{MAR1}
+
+In MAR1 (Missing At Random), missingness depends on a single feature $X_j$, where $j \sim \mathcal{U}(0, p-1)$:
+\begin{align*}
+    P(S = 1 \mid X, Y) = P(S = 1 \mid X_j).
+\end{align*}
+A feature index is randomly selected, and its values are transformed using a logistic function to obtain masking probabilities. These probabilities are then used to sample the indicator vector $S$, which determines which labels are replaced by a placeholder.
+
+\subsection{MAR2}
+
+In MAR2, missingness depends on all features:
+\begin{align*}
+    P(S = 1 \mid X, Y) = P(S = 1 \mid X).
+\end{align*}
+A score is computed as a normalized sum of all feature values and transformed via a logistic function to obtain masking probabilities. The indicator vector $S$ is then sampled accordingly, and missing labels are introduced in the same way as before.
+
+\subsection{MNAR}
+
+In MNAR (Missing Not At Random), missingness depends on both $X$ and $Y$:
+\begin{align*}
+    P(S = 1 \mid X, Y).
+\end{align*}
+A combined score based on feature values and the target variable is computed and passed through a logistic function to obtain masking probabilities. The indicator vector $S$ is sampled from these probabilities, and labels corresponding to $S=1$ are replaced with a placeholder.
+
+\newpage
+\section{Preparing Datasets}
+
+To evaluate the models, four datasets of varying dimensionalities, sizes, and intrinsic imbalances were utilized.
+
+\begin{enumerate}
+    \item \href{https://archive.ics.uci.edu/dataset/19/car+evaluation}{\textbf{Car Evaluation Dataset}} consists of 1728 instances described by 15 features. The task is to classify whether a car is acceptable or not based on attributes such as \textit{number of doors}, \textit{luggage boot size}, and \textit{safety level}.
+    
+    \item \href{https://www.openml.org/search?type=data&sort=runs&status=active&qualities.NumberOfClasses=%3D_2&qualities.NumberOfFeatures=between_100_1000&id=1485}{\textbf{Madelon Dataset}} is an artificial dataset created for the NIPS 2003 feature selection challenge. It is particularly challenging due to its highly multivariate and non-linear structure. The dataset comprises of 2600 instances with 500 features, many of which are redundant or irrelevant.
+
+    \item \href{https://archive.ics.uci.edu/dataset/320/student+performance}{\textbf{Student Performance Dataset}} aims to predict whether a student passes a mathematics course. It includes academic results along with demographic, social, and school-related attributes. The dataset contains 395 instances described by 26 features.
+
+    \item \href{https://www.openml.org/search?type=data&sort=runs&status=active&qualities.NumberOfClasses=%3D_2&qualities.NumberOfFeatures=between_100_1000&id=40536}{\textbf{Speed Dating Dataset}} addresses a binary classification problem of predicting whether a match occurs between participants. The data was collected during experimental speed dating events and includes features describing participants’ preferences, attributes, and interactions. It consists of 8378 instances and 329 features.
+\end{enumerate}
+
+To provide a clear view of the data landscape, the overall sample sizes and the detailed class distribution across our training, validation, and test splits are visualized in Figure~\ref{fig:data_viz_full}.
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth, keepaspectratio]{OverallClassBalanceFullDatasets.png}
+        
+        \vspace{0.2cm}
+        \small (a) Overall sample count comparison across four datasets.
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{minipage}{\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth, keepaspectratio]{ClassBalanceAcrossDatasets.png}
+        
+        \vspace{0.2cm}
+        \small (b) Detailed class balance (0 vs 1) breakdown for Training, Validation, and Test splits.
+    \end{minipage}
+    
+    \caption{Visualization of dataset sizes and class distributions.}
+    \label{fig:data_viz_full}
+\end{figure}
 
 
-\section{UnlabeledLogReg}
 
 
 \end{document}

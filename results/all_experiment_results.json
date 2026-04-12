@@ -1,0 +1,522 @@
+{
+  "Madelon": [
+    {
+      "Mechanism": "MCAR",
+      "Method": "Oracle",
+      "Accuracy": 0.5769230769230769,
+      "Balanced Accuracy": 0.5769020251778872,
+      "F1-Score": 0.5801526717557252,
+      "ROC AUC": 0.602301809198361
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Naive",
+      "Accuracy": 0.5769230769230769,
+      "Balanced Accuracy": 0.5769168182961286,
+      "F1-Score": 0.578544061302682,
+      "ROC AUC": 0.5957410612583026
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.5019230769230769,
+      "Balanced Accuracy": 0.5000147931182414,
+      "F1-Score": 0.6675224646983312,
+      "ROC AUC": 0.5967987692125624
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.5769230769230769,
+      "Balanced Accuracy": 0.5766061628130594,
+      "F1-Score": 0.6099290780141844,
+      "ROC AUC": 0.5949792156688709
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Oracle",
+      "Accuracy": 0.5769230769230769,
+      "Balanced Accuracy": 0.5769020251778872,
+      "F1-Score": 0.5801526717557252,
+      "ROC AUC": 0.602301809198361
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Naive",
+      "Accuracy": 0.5884615384615385,
+      "Balanced Accuracy": 0.5884406574061747,
+      "F1-Score": 0.5916030534351145,
+      "ROC AUC": 0.600127220816876
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.5692307692307692,
+      "Balanced Accuracy": 0.5689137413275345,
+      "F1-Score": 0.6028368794326241,
+      "ROC AUC": 0.5959925442684063
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.5788461538461539,
+      "Balanced Accuracy": 0.5784922853888371,
+      "F1-Score": 0.6151142355008787,
+      "ROC AUC": 0.5949792156688709
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Oracle",
+      "Accuracy": 0.5769230769230769,
+      "Balanced Accuracy": 0.5769020251778872,
+      "F1-Score": 0.5801526717557252,
+      "ROC AUC": 0.602301809198361
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Naive",
+      "Accuracy": 0.5653846153846154,
+      "Balanced Accuracy": 0.5653929791860826,
+      "F1-Score": 0.5653846153846154,
+      "ROC AUC": 0.5909406943889703
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.5461538461538461,
+      "Balanced Accuracy": 0.5451855796683382,
+      "F1-Score": 0.6380368098159509,
+      "ROC AUC": 0.5951567330877675
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.5788461538461539,
+      "Balanced Accuracy": 0.5789212858178375,
+      "F1-Score": 0.5714285714285714,
+      "ROC AUC": 0.5949792156688709
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Oracle",
+      "Accuracy": 0.5769230769230769,
+      "Balanced Accuracy": 0.5769020251778872,
+      "F1-Score": 0.5801526717557252,
+      "ROC AUC": 0.602301809198361
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Naive",
+      "Accuracy": 0.4980769230769231,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.0,
+      "ROC AUC": 0.6059261231675025
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.4980769230769231,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.0,
+      "ROC AUC": 0.5402890575304369
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.4980769230769231,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.0,
+      "ROC AUC": 0.5408216097871271
+    }
+  ],
+  "Car Eval": [
+    {
+      "Mechanism": "MCAR",
+      "Method": "Oracle",
+      "Accuracy": 0.9566473988439307,
+      "Balanced Accuracy": 0.9544325239977414,
+      "F1-Score": 0.9356223175965666,
+      "ROC AUC": 0.9928100884622624
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Naive",
+      "Accuracy": 0.9595375722543352,
+      "Balanced Accuracy": 0.9609636740071523,
+      "F1-Score": 0.940677966101695,
+      "ROC AUC": 0.9909655561829475
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.9450867052023122,
+      "Balanced Accuracy": 0.9348578957274609,
+      "F1-Score": 0.9162995594713657,
+      "ROC AUC": 0.9897986071899115
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.9624277456647399,
+      "Balanced Accuracy": 0.9631281761716544,
+      "F1-Score": 0.9446808510638298,
+      "ROC AUC": 0.9914172783738001
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Oracle",
+      "Accuracy": 0.9566473988439307,
+      "Balanced Accuracy": 0.9544325239977414,
+      "F1-Score": 0.9356223175965666,
+      "ROC AUC": 0.9928100884622624
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Naive",
+      "Accuracy": 0.9450867052023122,
+      "Balanced Accuracy": 0.9348578957274609,
+      "F1-Score": 0.9162995594713657,
+      "ROC AUC": 0.9890833803877281
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.9104046242774566,
+      "Balanced Accuracy": 0.878317334839074,
+      "F1-Score": 0.8530805687203792,
+      "ROC AUC": 0.9780538302277433
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.9450867052023122,
+      "Balanced Accuracy": 0.9370412196499153,
+      "F1-Score": 0.9170305676855895,
+      "ROC AUC": 0.9897986071899115
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Oracle",
+      "Accuracy": 0.9566473988439307,
+      "Balanced Accuracy": 0.9544325239977414,
+      "F1-Score": 0.9356223175965666,
+      "ROC AUC": 0.9928100884622624
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Naive",
+      "Accuracy": 0.9421965317919075,
+      "Balanced Accuracy": 0.9326933935629588,
+      "F1-Score": 0.9122807017543859,
+      "ROC AUC": 0.9917560700169397
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.8930635838150289,
+      "Balanced Accuracy": 0.8500470543948805,
+      "F1-Score": 0.8177339901477833,
+      "ROC AUC": 0.9865989083380388
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.953757225433526,
+      "Balanced Accuracy": 0.9413514022209675,
+      "F1-Score": 0.9285714285714286,
+      "ROC AUC": 0.9923207227555054
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Oracle",
+      "Accuracy": 0.9566473988439307,
+      "Balanced Accuracy": 0.9544325239977414,
+      "F1-Score": 0.9356223175965666,
+      "ROC AUC": 0.9928100884622624
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Naive",
+      "Accuracy": 0.9421965317919075,
+      "Balanced Accuracy": 0.921776773950687,
+      "F1-Score": 0.908256880733945,
+      "ROC AUC": 0.9931112365894974
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.7716763005780347,
+      "Balanced Accuracy": 0.6565217391304348,
+      "F1-Score": 0.4768211920529801,
+      "ROC AUC": 0.9851684547336722
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.9364161849710982,
+      "Balanced Accuracy": 0.9087144739318652,
+      "F1-Score": 0.8962264150943396,
+      "ROC AUC": 0.9923960097873141
+    }
+  ],
+  "Speed Dating": [
+    {
+      "Mechanism": "MCAR",
+      "Method": "Oracle",
+      "Accuracy": 0.8478520286396182,
+      "Balanced Accuracy": 0.6226531942633637,
+      "F1-Score": 0.3765281173594132,
+      "ROC AUC": 0.8197278357235983
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Naive",
+      "Accuracy": 0.8585918854415274,
+      "Balanced Accuracy": 0.6007496740547588,
+      "F1-Score": 0.3323943661971831,
+      "ROC AUC": 0.8279688179052586
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.8460620525059666,
+      "Balanced Accuracy": 0.514835940895263,
+      "F1-Score": 0.06521739130434782,
+      "ROC AUC": 0.8259615384615384
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.8579952267303103,
+      "Balanced Accuracy": 0.6066764450239026,
+      "F1-Score": 0.34615384615384615,
+      "ROC AUC": 0.8274119947848761
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Oracle",
+      "Accuracy": 0.8478520286396182,
+      "Balanced Accuracy": 0.6226531942633637,
+      "F1-Score": 0.3765281173594132,
+      "ROC AUC": 0.8197278357235983
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Naive",
+      "Accuracy": 0.85381861575179,
+      "Balanced Accuracy": 0.5618155149934811,
+      "F1-Score": 0.22712933753943218,
+      "ROC AUC": 0.8273590286831813
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.8424821002386634,
+      "Balanced Accuracy": 0.5048674489352456,
+      "F1-Score": 0.029411764705882353,
+      "ROC AUC": 0.8102265319426337
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.8526252983293556,
+      "Balanced Accuracy": 0.565819209039548,
+      "F1-Score": 0.24,
+      "ROC AUC": 0.8265591047370708
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Oracle",
+      "Accuracy": 0.8478520286396182,
+      "Balanced Accuracy": 0.6226531942633637,
+      "F1-Score": 0.3765281173594132,
+      "ROC AUC": 0.8197278357235983
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Naive",
+      "Accuracy": 0.85381861575179,
+      "Balanced Accuracy": 0.5947848761408083,
+      "F1-Score": 0.31754874651810583,
+      "ROC AUC": 0.8325646458061713
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.8394988066825776,
+      "Balanced Accuracy": 0.4983920034767492,
+      "F1-Score": 0.007380073800738007,
+      "ROC AUC": 0.820029335071708
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.8568019093078759,
+      "Balanced Accuracy": 0.5902705345501955,
+      "F1-Score": 0.3063583815028902,
+      "ROC AUC": 0.8268904823989569
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Oracle",
+      "Accuracy": 0.8478520286396182,
+      "Balanced Accuracy": 0.6226531942633637,
+      "F1-Score": 0.3765281173594132,
+      "ROC AUC": 0.8197278357235983
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Naive",
+      "Accuracy": 0.8430787589498807,
+      "Balanced Accuracy": 0.4989406779661017,
+      "F1-Score": 0.0,
+      "ROC AUC": 0.8241471099521948
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.8448687350835322,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.0,
+      "ROC AUC": 0.8178088331160366
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.8454653937947494,
+      "Balanced Accuracy": 0.5019230769230769,
+      "F1-Score": 0.007662835249042145,
+      "ROC AUC": 0.8299516514558887
+    }
+  ],
+  "Student Performance": [
+    {
+      "Mechanism": "MCAR",
+      "Method": "Oracle",
+      "Accuracy": 0.6582278481012658,
+      "Balanced Accuracy": 0.5831117021276595,
+      "F1-Score": 0.773109243697479,
+      "ROC AUC": 0.7613031914893618
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Naive",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.746031746031746,
+      "ROC AUC": 0.6781914893617023
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.6329113924050633,
+      "Balanced Accuracy": 0.5518617021276595,
+      "F1-Score": 0.7603305785123967,
+      "ROC AUC": 0.6781914893617023
+    },
+    {
+      "Mechanism": "MCAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.746031746031746,
+      "ROC AUC": 0.6781914893617023
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Oracle",
+      "Accuracy": 0.6582278481012658,
+      "Balanced Accuracy": 0.5831117021276595,
+      "F1-Score": 0.773109243697479,
+      "ROC AUC": 0.7613031914893618
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Naive",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.746031746031746,
+      "ROC AUC": 0.6781914893617023
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.746031746031746,
+      "ROC AUC": 0.6781914893617023
+    },
+    {
+      "Mechanism": "MAR1",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.6455696202531646,
+      "Balanced Accuracy": 0.5674867021276595,
+      "F1-Score": 0.7666666666666667,
+      "ROC AUC": 0.7563164893617023
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Oracle",
+      "Accuracy": 0.6582278481012658,
+      "Balanced Accuracy": 0.5831117021276595,
+      "F1-Score": 0.773109243697479,
+      "ROC AUC": 0.7613031914893618
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Naive",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.746031746031746,
+      "ROC AUC": 0.6715425531914894
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.6582278481012658,
+      "Balanced Accuracy": 0.5831117021276595,
+      "F1-Score": 0.773109243697479,
+      "ROC AUC": 0.7004654255319149
+    },
+    {
+      "Mechanism": "MAR2",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.5,
+      "F1-Score": 0.746031746031746,
+      "ROC AUC": 0.6160239361702128
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Oracle",
+      "Accuracy": 0.6582278481012658,
+      "Balanced Accuracy": 0.5831117021276595,
+      "F1-Score": 0.773109243697479,
+      "ROC AUC": 0.7613031914893618
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Naive",
+      "Accuracy": 0.4430379746835443,
+      "Balanced Accuracy": 0.5319148936170213,
+      "F1-Score": 0.12,
+      "ROC AUC": 0.7646276595744681
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (KNN)",
+      "Accuracy": 0.5189873417721519,
+      "Balanced Accuracy": 0.5807845744680851,
+      "F1-Score": 0.3870967741935484,
+      "ROC AUC": 0.6715425531914894
+    },
+    {
+      "Mechanism": "MNAR",
+      "Method": "Unlabeled (LogReg)",
+      "Accuracy": 0.5949367088607594,
+      "Balanced Accuracy": 0.6196808510638298,
+      "F1-Score": 0.5897435897435898,
+      "ROC AUC": 0.6828457446808511
+    }
+  ]
+}
