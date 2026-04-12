@@ -208,9 +208,22 @@ Using the chain rule, we obtain the gradient for a single observation as
         $ \frac{\partial f_i}{\partial \mathbf{y}_k} = \delta_i \cdot \mathbf{x}^{(i)}     $.
 To compute the total gradient across all $n$ observations, we average the individual gradients. The iterative process continues until a predefined convergence criterion is satisfied, specifically when the Euclidean norm of the parameter update, $\|\mathbf{x}_k - \mathbf{x}_{k-1}\|_2$, falls beneath a strict tolerance threshold.
 
+\section{UnlabeledLogReg Implementation}
 
-\subsection{Hyperparameter Tuning}
-To pick the best regularization coefficient $\lambda$, our implementation employs a grid search strategy combined with hold-out validation. The algorithm operates over a logarithmically spaced sequence of candidate values and computes the corresponding model weights. Then it is evaluated on a dedicated, hold-out validation set using a user-specified performance metric. The $\lambda$ that maximizes the validation score is selected as the optimal hyperparameter, and its associated coefficients are retained as the final model parameters.
+To address the challenge of missing labels in the training data, we implemented a custom wrapper class named \texttt{UnlabeledLogReg}. This approach falls under the umbrella of semi-supervised learning and single-imputation techniques. The core idea is to leverage the fully observed portion of the data to estimate the missing labels before training the final predictive FISTA model.
+
+The algorithm proceeds in the following steps:
+\begin{enumerate}
+    \item \textbf{Data Partitioning:} The input training set $(\mathbf{X}, y_{obs})$ is split into two disjoint subsets based on the label values: the labeled set where $y_{obs} \neq -1$, and the unlabeled (missing) set where $y_{obs} = -1$.
+    \item \textbf{Imputer Training:} An imputation model is trained exclusively on the labeled subset. We implemented two distinct imputation strategies:
+    \begin{itemize}
+        \item \textbf{k-Nearest Neighbors (k-NN):} Uses the 5 closest labeled samples in the feature space to vote on the missing label.
+        \item \textbf{Logistic Regression (Sklearn):} Fits a standard logistic regression model to the observed data to predict the missing labels.
+    \end{itemize}
+    \item \textbf{Label Imputation:} The trained imputer predicts the labels $\hat{y}$ for the unlabeled subset $\mathbf{X}_{unlabeled}$.
+    \item \textbf{Dataset Reconstruction:} A complete, pseudo-labeled target vector $y_{complete}$ is formed by concatenating the original $y_{obs}$ (for the labeled part) and the predicted $\hat{y}$ (for the missing part).
+    \item \textbf{Final Model Training:} The custom \texttt{FistaLogisticRegression} model is then trained on the fully reconstructed dataset $(\mathbf{X}, y_{complete})$.
+\end{enumerate}
 
 \subsection{Prediction, Classification and Model Evaluation}
 Following optimization, the framework provides standard inference and evaluation methods:
