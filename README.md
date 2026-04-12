@@ -1,3 +1,7 @@
+# Advanced Machine Learning - Project 1
+
+The aim of this project is to analyze the performance of a logistic regression model when trained on datasets with missing labels. We investigate how different missing data mechanisms (MCAR, MAR, MNAR) affect the learning process and evaluate simple imputation strategies to maintain the model’s accuracy.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
