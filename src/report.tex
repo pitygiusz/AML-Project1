@@ -59,8 +59,7 @@ Warsaw University of Technology
 
 
 \begin{abstract}
-\noindent The aim of the project is to analyze a logistic regression model in a situation where the training 
-dataset contains observations with missing labels.
+\noindent The aim of this project is to analyze the performance of a logistic regression model when trained on datasets with missing labels. We investigate how different missing data mechanisms (MCAR, MAR, MNAR) affect the learning process and evaluate simple imputation strategies to maintain the model's accuracy.
 \end{abstract}
 
 \newpage 
@@ -89,34 +88,6 @@ To evaluate the models, four datasets of varying dimensionalities, sizes, and in
 
     \item \href{https://www.openml.org/search?type=data&sort=runs&status=active&qualities.NumberOfClasses=%3D_2&qualities.NumberOfFeatures=between_100_1000&id=40536}{\textbf{Speed Dating Dataset}} addresses a binary classification problem of predicting whether a match occurs between participants. The data was collected during experimental speed dating events and includes features describing participants’ preferences, attributes, and interactions. It consists of 8378 instances and 329 features.
 \end{enumerate}
-
-To provide a clear view of the data landscape, the overall sample sizes and the detailed class distribution across our training, validation, and test splits are visualized in Figure~\ref{fig:data_viz_full}.
-
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}{\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth, height=0.35\textheight, keepaspectratio]{OverallClassBalanceFullDatasets.png}
-        
-        \vspace{0.2cm}
-        \small (a) Overall sample count comparison across four datasets.
-    \end{minipage}
-    
-    \vspace{0.6cm} 
-    
-    \begin{minipage}{\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth, height=0.4\textheight, keepaspectratio]{ClassBalanceAcrossDatasets.png}
-        
-        \vspace{0.2cm}
-        \small (b) Detailed class balance (0 vs 1) breakdown for Training, Validation, and Test splits.
-    \end{minipage}
-    
-    \caption{Visualization of dataset sizes and class distributions.}
-    \label{fig:data_viz_full}
-\end{figure}
-
-\clearpage
 
 \section{Handling Missing Data}
 
